@@ -63,7 +63,7 @@ def compress_project(project_data, module):
         if not path_jar_file:
             cprint(f"No se encontró el archivo jar en {path_compilation}", "red")
             exit(1)
-        new_name = f"nomina_{now}.jar"
+        new_name = f"{project_name}_{now}.jar"
         new_path = os.path.join(os.path.dirname(path_jar_file), new_name)
         os.rename(path_jar_file, new_path)
         source_path = new_path
