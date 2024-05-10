@@ -91,7 +91,6 @@ def upload_compress_file(file_name_compress, project, module, credentials):
     password = credentials["password"]
     name = project["name"]
     server = f"{credentials['server_name']}-{host}"
-    project_service = project["service_server"]
     cprint(f"Conectando al servidor {server}...", "yellow")
     with Connection(host, user, connect_kwargs={"password": password}) as conn:
         with conn.cd(project["path_server"]):
@@ -102,6 +101,7 @@ def upload_compress_file(file_name_compress, project, module, credentials):
             conn.run("ls")
             time.sleep(1)
             if module == "back":
+                project_service = project["service_server"]
                 cprint(f"Descomprimiendo archivo... {file_name_compress}", "yellow")
                 conn.run(f"tar -xzf {file_name_compress}", hide=True)
                 cprint("Archivos descomprimido con éxito", "green")
