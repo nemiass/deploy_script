@@ -37,11 +37,7 @@ def compilation_project(project, module, server):
     if module == "back":
         commands = ["mvn", "clean", "package"]
     elif module == "front":
-        _commands = {
-            "dev": ["ng", "build", "--configuration=dev"],
-            "uat": ["ng", "build", "--configuration=uat"],
-        }
-        commands = _commands.get(server, None)
+        commands = ["ng", "build", f"--configuration={server}"]
     cprint(f"Comando: {' '.join(commands)}", "yellow")
     project_path = project["path"]
     res = subprocess.run(commands, cwd=project_path, shell=True)
