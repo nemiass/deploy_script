@@ -19,6 +19,10 @@
     "PROJECTS": {
         "nomina": {
             "front": {
+                "extra_commands": {
+                    "pre_compilation": ["git stash", "git checkout develop", "git pull origin develop", "git stash pop"],
+                    "post_compilation": []
+                },
                 "type": "front",
                 "name": "nomina",
                 "path": "C:/Users/user/Desktop/projects/nomina/fe_nomina",
@@ -26,6 +30,10 @@
                 "path_server": "/var/www/html/Nomina"
             },
             "back": {
+                "extra_commands": {
+                    "pre_compilation": ["git stash", "git checkout develop", "git pull origin develop", "git stash pop"],
+                    "post_compilation": []
+                },
                 "type": "back",
                 "name": "nomina",
                 "path": "C:/Users/user/Desktop/projects/nomina/back_nomina",
