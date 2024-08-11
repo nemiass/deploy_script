@@ -56,6 +56,7 @@ def pre_git_command_process(project_dict):
     
     if input_option == "n":
         cprint("Proceso omitido", "yellow")
+        return []
     elif input_option == "y":
         cprint(f"Inciando proceso en: {project_path}", "yellow")
         for command in pre_compilation_commands:
@@ -179,6 +180,32 @@ def upload_compress_file_to_server(file_name_compress, project, module, credenti
                 conn.run("ls")
     cprint("Archivo subido y ejecutado con éxito".upper(), "green")
 
+
+def confirmation_protection_for_prod_server(server_name):
+    protection_servers = ("prod", )
+    if server_name not in protection_servers:
+        return
+    number_confirmations = 0
+    max_confirmations = 3
+    options = ["y", "n"]
+    cprint("Profavor confirme 3 veces para desplegar en el servidor de producción", "yellow")
+    while number_confirmations <= max_confirmations :
+        cprint(f"ADVERTENCIA: Está seguro de querer desplegar en el servidor {server_name} (s/n)", "red")
+        option = input("y/n: ").strip()
+        
+        if option not in options:
+            cprint(f"Opción '{option}' no válida", "yellow")
+            continue
+        
+        if option == options[1]:
+             cprint("Proceso cancelado", "red")
+             os.exit(0)
+             break
+
+        elif option == options[0]:
+            number_confirmations += 1
+            cprint(f"Confirmación {number_confirmations} de {max_confirmations}", "green")
+
 def main():
     parser = argparse.ArgumentParser(description="Deploy script")
     parser.add_argument("project", type=str, help="Project to deploy, project name")
@@ -189,6 +216,8 @@ def main():
     project_name = args.project
     module = args.module
     server = args.server
+
+    confirmation_protection_for_prod_server(server)
 
     config = load_config()
     os.environ["JAVA_HOME"] = config["JAVA_HOME"]
